@@ -2,8 +2,9 @@
 
 const rp = require('request-promise')
 const fs = require('fs')
+const util = require('./util')
 
-class ImageRecognition {
+class CustomVision {
 
   constructor () {
     this.apiUrl = 'https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/'
@@ -37,7 +38,7 @@ class ImageRecognition {
       .then((response) => {
         let data = JSON.parse(response)
         // 判定結果の数値を整形する
-        let result = Math.floor(data.predictions[0].probability * 10000) / 100
+        let result = util.formatSmallNumPercent(data.predictions[0].probability)
 
         return result
       })
@@ -48,4 +49,4 @@ class ImageRecognition {
 
 }
 
-module.exports = ImageRecognition
+module.exports = CustomVision
