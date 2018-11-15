@@ -14,9 +14,12 @@ router.get('/', (req, res) => {
  * 画像認識
  */
 router.post('/image-recognition', upload.single('image-model'), (req, res) => {
-  const cv = new CustomVision()
-  cv.setImageModel(req.file.path)
-  let result = cv.execute()
+  (async () => {
+    const cv = new CustomVision()
+    await cv.setImageModel(req.file.path)
+    let result = await cv.recognizeImage()
+    // await res.render('index', result)
+  })()
 })
 
 module.exports = router

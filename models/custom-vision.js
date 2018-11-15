@@ -24,17 +24,16 @@ class CustomVision {
   /**
    * アップロード画像を設定
    */
-  setImageModel (imagePath) {
+  async setImageModel (imagePath) {
     this.options.body = fs.createReadStream(imagePath)
   }
 
   /**
-   * 認識実行
+   * 認識認識
    *
-   * todo 同期処理に修正
    */
-  execute () {
-    rp.post(this.options)
+  async recognizeImage () {
+    await rp.post(this.options)
       .then((response) => {
         let data = JSON.parse(response)
         // 判定結果の数値を整形する
