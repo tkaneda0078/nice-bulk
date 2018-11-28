@@ -1,0 +1,26 @@
+.body {
+  background: #303841;
+}
+
+.background-img {
+  height: 100vh;
+  width: 100%;
+}
+
+.link {
+  color: #f6c90e;
+}
+
+.link:hover {
+  color: #f6c90e;
+}
+
+.msg {
+  color: #eeeeee;
+}
+
+.button {
+  border: 1px solid #f6c90e!important;
+  color: #303841!important;
+  background-color: #f6c90e;
+}

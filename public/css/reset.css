@@ -1,0 +1,13 @@
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  text-decoration: none!important;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+a:hover {
+  color: initial;
+  text-decoration: underline;
+}
