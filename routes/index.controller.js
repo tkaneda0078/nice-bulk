@@ -1,9 +1,9 @@
 'use strict'
 
 const express = require('express')
+const router = express.Router()
 const multer  = require('multer')
 const upload = multer({dest: '../uploads'})
-const router = express.Router()
 const CustomVision = require('../models/custom-vision')
 
 router.get('/', (req, res) => {
@@ -13,13 +13,16 @@ router.get('/', (req, res) => {
 /**
  * 画像認識
  */
-router.post('/image-recognition', upload.single('image-model'), (req, res) => {
-  (async () => {
+router.post('/image-recognition', upload.single('image-model'), async (req, res) => {
+  try {
     const cv = new CustomVision()
     await cv.setImageModel(req.file.path)
-    let result = await cv.recognizeImage()
-    // await res.render('index', result)
-  })()
+    const result = await cv.recognizeImage()
+
+    res.render('index', result)
+  } catch (e) {
+    console.log(e)
+  }
 })
 
 module.exports = router

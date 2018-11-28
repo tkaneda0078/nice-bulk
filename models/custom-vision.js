@@ -7,13 +7,13 @@ const util = require('./util')
 class CustomVision {
 
   constructor () {
-    this.apiUrl = 'https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/'
-    this.apiUrl += process.env.PROJECT_ID
-    this.apiUrl += '/image?iterationId=' + process.env.ITERATION_ID
+    this._apiUrl = 'https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/'
+    this._apiUrl += process.env.PROJECT_ID
+    this._apiUrl += '/image?iterationId=' + process.env.ITERATION_ID
 
-    this.options = {
+    this._options = {
       'method' : 'POST',
-      'url'    : this.apiUrl,
+      'url'    : this._apiUrl,
       'headers': {
         'Prediction-Key': process.env.PREDICTION_KEY,
         'Content-Type'  : 'application/octet-stream'
@@ -23,27 +23,24 @@ class CustomVision {
 
   /**
    * アップロード画像を設定
+   *
    */
   async setImageModel (imagePath) {
-    this.options.body = fs.createReadStream(imagePath)
+    this._options.body = fs.createReadStream(imagePath)
   }
 
   /**
    * 認識認識
    *
+   * @return int result 認識結果
    */
   async recognizeImage () {
-    await rp.post(this.options)
-      .then((response) => {
-        let data = JSON.parse(response)
-        // 判定結果の数値を整形する
-        let result = util.formatSmallNumPercent(data.predictions[0].probability)
+    const response = await rp.post(this._options)
+    const data = JSON.parse(response)
+    // 判定結果の数値を整形する
+    const result = util.formatSmallNumPercent(data.predictions[0].probability)
 
-        return result
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    return result
   }
 
 }
