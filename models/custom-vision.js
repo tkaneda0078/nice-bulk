@@ -6,6 +6,10 @@ const util = require('./util')
 
 class CustomVision {
 
+  /**
+   * constructor
+   *
+   */
   constructor () {
     this._apiUrl = 'https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/'
     this._apiUrl += process.env.PROJECT_ID
@@ -30,7 +34,7 @@ class CustomVision {
   }
 
   /**
-   * 認識認識
+   * 画像認識
    *
    * @return int result 認識結果
    */
@@ -38,9 +42,7 @@ class CustomVision {
     const response = await rp.post(this._options)
     const data = JSON.parse(response)
     // 判定結果の数値を整形する
-    const result = util.formatSmallNumPercent(data.predictions[0].probability)
-
-    return result
+    return util.formatSmallNumPercent(data.predictions[0].probability)
   }
 
 }

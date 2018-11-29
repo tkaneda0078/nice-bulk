@@ -23,11 +23,18 @@ html(lang="ja")
 
       img.background-img(src='images/background.jpg', alt='')
 
-      form(action='/image-recognition', method='POST', enctype='multipart/form-data')
+      if result
         div.uk-overlay.uk-position-center.uk-text-center
           div.uk-margin-bottom
-            span.msg.uk-text-middle 測定する画像を選択してください
-          div(uk-form-custom='target: true')
-            input(type='file', name='image-model')
-            input.uk-input.uk-form-width-medium(type='text', placeholder='画像を選択する', disabled='')
-          button.button.uk-button 測定する
+            span.result-text #{result}%
+          div
+            a.button.uk-button(href='/') 再測定
+      else
+        form(action='/image-recognition', method='POST', enctype='multipart/form-data')
+          div.uk-overlay.uk-position-center.uk-text-center
+            div.uk-margin-bottom
+              span.msg.uk-text-middle 測定する画像を選択してください
+            div(uk-form-custom='target: true')
+              input(type='file', name='image-model')
+              input.uk-input.uk-form-width-medium(type='text', placeholder='画像を選択', disabled='')
+            button.button.uk-button 測定

@@ -15,11 +15,13 @@ router.get('/', (req, res) => {
  */
 router.post('/image-recognition', upload.single('image-model'), async (req, res) => {
   try {
+    let data = []
     const cv = new CustomVision()
     await cv.setImageModel(req.file.path)
-    const result = await cv.recognizeImage()
+    // 画像認識
+    data['result'] = await cv.recognizeImage()
 
-    res.render('index', result)
+    res.render('index', data)
   } catch (e) {
     console.log(e)
   }
